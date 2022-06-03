@@ -1,0 +1,12 @@
+.signIns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  align-items: flex-end;
+  gap: 40px;
+}
+.signcontainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
