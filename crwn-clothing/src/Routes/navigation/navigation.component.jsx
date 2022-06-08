@@ -7,6 +7,7 @@ import { SignOutFun } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../component/cart-icon/cart-icon.componet";
 import CartDropdown from "../../component/cart-dropdown/cart-dropdown.component";
 import { CartContext } from "../../component/contexts/cart.context";
+
 import {
   NavigationContainer,
   NaviLinks,
@@ -25,6 +26,7 @@ const Navgation = () => {
         </LogoContainer>
 
         <NaviLinks>
+          <NavLink to="/Practice">Practice</NavLink>
           <NavLink to="/Shop">Shop</NavLink>
           <NavLink to="/CheckOut">CheckOut</NavLink>
           {currentUser ? (

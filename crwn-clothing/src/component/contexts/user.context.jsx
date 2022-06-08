@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import {
   onAuthStateChangeListener,
   createUserDocumentFromAuth,
@@ -8,8 +8,35 @@ export const UserContext = createContext({
   setcurrentUser: () => null,
 });
 
+export const USER_ACTION_TYPES = {
+  SET_CURRENT_USER: "SET_CURRENT_USER",
+};
+
+const INITIAL_STATE = { currentUser: null };
+
+const userReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case USER_ACTION_TYPES.SET_CURRENT_USER:
+      return {
+        ...state, //useReducer 的return 是回傳state內修改後的物件, 也就是const [state,dispatch]中的state物件被修改後的樣子
+        currentUser: payload,
+      };
+
+    default:
+      throw new Error(`Unhandle type ${type} in Reducer`);
+  }
+};
+
 export const UserProvider = ({ children }) => {
-  const [currentUser, setcurrentUser] = useState(null);
+  // const [currentUser, setcurrentUser] = useState(null);
+  const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE); //利用dispatch 設定current user
+
+  const setcurrentUser = (user) => {
+    dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user });
+  };
+
   const value = { currentUser, setcurrentUser };
 
   useEffect(() => {
