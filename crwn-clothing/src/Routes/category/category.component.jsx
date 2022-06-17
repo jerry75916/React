@@ -4,18 +4,20 @@ import "./category.style.scss";
 import { useParams } from "react-router-dom";
 import { CategoriesContext } from "../../component/contexts/categories.context";
 import ProductCart from "../../component/product-card/product-card.component";
+import { useSelector } from "react-redux";
+import { selectCategories } from "../../store/categories/category.selector";
 const Category = () => {
   const { category } = useParams(); //抓url parameter字串
 
-  const { categoriesMap } = useContext(CategoriesContext); //所有category 包含item
-
-  const [products, setproducts] = useState(categoriesMap[category]);
+  // const { categoriesMap } = useContext(CategoriesContext); //所有category 包含item
+  const categories = useSelector(selectCategories);
+  const [products, setproducts] = useState(categories[category]);
 
   useEffect(() => {
-    setproducts(categoriesMap[category]);
+    setproducts(categories[category]);
     window.scrollTo(0, 0);
     //取單一category
-  }, [categoriesMap, category]);
+  }, [categories, category]);
 
   return (
     <Fragment>

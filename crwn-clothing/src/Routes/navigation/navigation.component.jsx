@@ -7,7 +7,10 @@ import { SignOutFun } from "../../utils/firebase/firebase.utils";
 import CartIcon from "../../component/cart-icon/cart-icon.componet";
 import CartDropdown from "../../component/cart-dropdown/cart-dropdown.component";
 import { CartContext } from "../../component/contexts/cart.context";
-
+import { useSelector } from "react-redux";
+import { selectcurrentUser } from "../../store/user/user.selector";
+// import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import {
   NavigationContainer,
   NaviLinks,
@@ -15,8 +18,11 @@ import {
   LogoContainer,
 } from "./navigation.style";
 const Navgation = () => {
-  const { currentUser } = useContext(UserContext);
-  const { isCartOpen } = useContext(CartContext);
+  const currentUser = useSelector(selectcurrentUser); //redux 中已dispatch 後，取出值使用selector
+  // const { currentUser } = useContext(UserContext);
+  // const { isCartOpen } = useContext(CartContext);
+
+  const isCartOpen = useSelector(selectIsCartOpen);
 
   return (
     <Fragment>

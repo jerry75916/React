@@ -54,12 +54,13 @@ export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, "categories");
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {}); //reduce 的初值為object, 把Items設為acc[mens]:[id:1,price:]...
-  return categoryMap;
+  return querySnapshot.docs.map((doc) => doc.data());
+  // const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+  //   const { title, items } = docSnapshot.data();
+  //   acc[title.toLowerCase()] = items;
+  //   return acc;
+  // }, {}); //reduce 的初值為object, 把Items設為acc[mens]:[id:1,price:]...
+  // return categoryMap;
 };
 
 export const createUserDocumentFromAuth = async (
