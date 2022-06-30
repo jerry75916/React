@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { selectcurrentUser } from "../../store/user/user.selector";
 // import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { useDispatch } from "react-redux";
+import { signOutStart } from "../../store/user/user.action";
 import {
   NavigationContainer,
   NaviLinks,
@@ -21,9 +23,11 @@ const Navgation = () => {
   const currentUser = useSelector(selectcurrentUser); //redux 中已dispatch 後，取出值使用selector
   // const { currentUser } = useContext(UserContext);
   // const { isCartOpen } = useContext(CartContext);
-
+  const dispatch = useDispatch();
   const isCartOpen = useSelector(selectIsCartOpen);
-
+  const UserSignOut = () => {
+    dispatch(signOutStart());
+  };
   return (
     <Fragment>
       <NavigationContainer>
@@ -36,7 +40,7 @@ const Navgation = () => {
           <NavLink to="/Shop">Shop</NavLink>
           <NavLink to="/CheckOut">CheckOut</NavLink>
           {currentUser ? (
-            <NavLink as="span" onClick={SignOutFun}>
+            <NavLink as="span" onClick={UserSignOut}>
               Sign Out
             </NavLink>
           ) : (

@@ -7,11 +7,21 @@ import "./sign-in.style.scss";
 import FormInput from "../form-input/form-input.componet";
 
 import Button, { BUTTON_TYPE_CLASSES } from "../buttons/button.component";
+import {
+  googleSignInStart,
+  emailSignInStart,
+} from "../../store/user/user.action";
+import { useDispatch } from "react-redux";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
   const loggoogleuser = async () => {
-    await signInWithGooglePopup();
+    dispatch(googleSignInStart());
   };
+
+  // async () => {
+  //   await signInWithGooglePopup();
+  // };
 
   const defaultFormFields = {
     email: "",
@@ -24,7 +34,8 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
-      await SignInAuthUserWithEmailAndPassWord(email, password);
+      dispatch(emailSignInStart(email, password));
+      // await SignInAuthUserWithEmailAndPassWord(email, password);
       // setcurrentUser(user);
       resetForm();
     } catch (e) {

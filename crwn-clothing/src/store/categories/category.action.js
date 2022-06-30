@@ -31,14 +31,15 @@ export const fetchCategoriesFailed = (error) => {
 // const a = () => (dispatch) => {
 
 // };
-export const fetchCategoriesAsnyc = () => async (dispatch) => {
-  //使用方式如function a return 一個async function 給外界
-  // functino()
-  dispatch(fetchCategoriesStart()); //isloading:true
-  try {
-    const categoriesArray = await getCategoriesAndDocuments();
-    dispatch(fetchCategoriesSuccess(categoriesArray)); //isloading false
-  } catch (error) {
-    dispatch(fetchCategoriesFailed(error));
-  }
-};
+//redux-saga 時此行不用加
+// export const fetchCategoriesAsnyc = () => async (dispatch) => {
+//   //使用方式如function a return 一個async function 給外界
+//   // functino()
+//   dispatch(fetchCategoriesStart()); //isloading:true
+//   try {
+//     const categoriesArray = await getCategoriesAndDocuments();
+//     dispatch(fetchCategoriesSuccess(categoriesArray)); //isloading false
+//   } catch (error) {
+//     dispatch(fetchCategoriesFailed(error));
+//   }
+// };
