@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { SpinnerContainer } from "../spinner/spinner.style";
+
 export const BaseButtom = styled.button`
   min-width: 165px;
   width: auto;
@@ -17,6 +19,7 @@ export const BaseButtom = styled.button`
   cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
   &:hover {
     background-color: white;
     color: black;
@@ -25,7 +28,7 @@ export const BaseButtom = styled.button`
 `;
 export const Google_sign_inButtom = styled(BaseButtom)`
   background-color: #4285f4;
-  color: white;
+  color: #fff;
   &:hover {
     background-color: #357ae8;
     border: none;
@@ -44,6 +47,10 @@ export const invertedButtom = styled(BaseButtom)`
   }
 `;
 
+export const ButtonSpinner = styled(SpinnerContainer)`
+  width: 30px;
+  height: 30px;
+`;
 // .button-container {
 
 //   &.google-sign-in {
