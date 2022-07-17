@@ -1,0 +1,8 @@
+.del {
+  text-decoration: line-through;
+  text-decoration-style: double;
+  color: red;
+}
+.del::after {
+  content: "\2713";
+}
