@@ -12,7 +12,7 @@ Card:4242-4242-4242-4242 02/24 CVC:424 address:42242
 The complete web site you can click this link <a href="https://jerry-hsieh-react.netlify.app">React eShop</a><br/>
 
 
-New Practice to let the web site look fancy
-1)
-![image](https://user-images.githubusercontent.com/101940444/179435659-c6186875-0577-407b-b2bd-d1cfa37ab822.png)
+1) New Practice to let the web site look fancy<br/>
+
+![image](https://user-images.githubusercontent.com/101940444/179435659-c6186875-0577-407b-b2bd-d1cfa37ab822.png)<br/>
 <a href="https://jerry-react-newpractice.netlify.app/">New Practice</a>
