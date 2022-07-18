@@ -1,19 +1,33 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-box.component";
+import { getData } from "./utils/data.utils";
+
+export type Monster = {
+  id: string;
+  email: string;
+  name: string;
+};
 
 const App = () => {
   const [searchField, setSearchFeild] = useState(""); //[value,setValue]
-  const [mons, setMonsters] = useState([]);
+  const [mons, setMonsters] = useState<Monster[]>([]);
   const [filterStat, setFilter] = useState(mons);
   const [title, setTitle] = useState("Monster");
   useEffect(() => {
     //為了讓render 已經render 完成後才作fetch,Effect 只跑一次，所以用[]
-    fetch(`https://jsonplaceholder.typicode.com/users`)
-      .then((res) => res.json())
-      .then((users) => setMonsters(users));
+    // fetch(`https://jsonplaceholder.typicode.com/users`)
+    //   .then((res) => res.json())
+    //   .then((users) => setMonsters(users));
+    const fetchUsers = async () => {
+      const users = await getData<Monster[]>(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+      setMonsters(users);
+    };
+    fetchUsers();
   }, []);
   useEffect(() => {
     const filterarr = mons.filter((f) =>
@@ -21,12 +35,12 @@ const App = () => {
     );
     setFilter(filterarr);
   }, [mons, searchField]);
-  const onSearchChange = (e) => {
+  const onSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldString = e.target.value.toLocaleLowerCase();
     setSearchFeild(searchFieldString);
   };
 
-  const onSearchChangeTitle = (e) => {
+  const onSearchChangeTitle = (e: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldTitle = e.target.value.toLocaleLowerCase();
     setTitle(searchFieldTitle);
   };
@@ -58,7 +72,6 @@ const App = () => {
         onChangeHandler={onSearchChange}
         placeholder="Monstor Search"
       />
-
       <SearchBox
         className="monsters-search-box"
         onChangeHandler={onSearchChangeTitle}
