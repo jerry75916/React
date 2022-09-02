@@ -1,0 +1,61 @@
+body {
+  background-color: var(--color-primary);
+  overflow: hidden;
+  /* avoid min-height to prevent glitches on css animation */
+}
+form.form input {
+  width: 100%;
+}
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: var(--color-grey);
+  padding: 1rem;
+  margin: 1rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+.complete {
+  position: relative;
+  background-color: #fff;
+  border-left: 5px solid rgb(15, 197, 61);
+}
+.Notcomplete {
+  position: relative;
+  background-color: #fff;
+  border-left: 5px solid orangered;
+}
+.Notcomplete::after {
+  content: "Ongoing";
+  position: absolute;
+  right: 1rem;
+  bottom: 3px;
+  background-color: orangered;
+  color: #fff;
+  padding: 2px;
+  border-radius: 10px;
+}
+.complete::after {
+  content: "Complete";
+  position: absolute;
+  right: 1rem;
+  bottom: 3px;
+  background-color: rgb(15, 197, 61);
+  color: #fff;
+  padding: 2px;
+  border-radius: 10px;
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: block;
+  -webkit-appearance: none;
+}
+.task_bottom_line {
+  padding: 1rem;
+  display: inline-block;
+  width: 100%;
+  border-bottom: 2px #fff solid;
+}

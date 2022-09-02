@@ -4,6 +4,11 @@ import Register from "./Register";
 import "./AuthContainer.scss";
 import Reset from "./Reset";
 const AuthContainer = () => {
+  const [passwordVisble, setpasswordVisble] = useState(false);
+  const changePasswordVisible = () => {
+    setpasswordVisble(!passwordVisble);
+  };
+
   const [auth, SetAuth] = useState({
     login: true,
     register: false,
@@ -35,9 +40,20 @@ const AuthContainer = () => {
     <section className="--100vh --flex-center">
       <div className="container box">
         {auth.login && (
-          <Loging onRegister={handleRegister} onReset={handleReset} />
+          <Loging
+            onRegister={handleRegister}
+            onReset={handleReset}
+            onShowPassword={passwordVisble}
+            ontogglePassword={changePasswordVisible}
+          />
         )}
-        {auth.register && <Register onLogin={handleLogin} />}
+        {auth.register && (
+          <Register
+            onLogin={handleLogin}
+            onShowPassword={passwordVisble}
+            ontogglePassword={changePasswordVisible}
+          />
+        )}
         {auth.reset && <Reset onLogin={handleLogin} />}
       </div>
     </section>

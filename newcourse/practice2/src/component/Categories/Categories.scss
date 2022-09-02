@@ -1,0 +1,7 @@
+.btn {
+  background-color: transparent;
+  transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+.btn:hover {
+  background-color: orangered;
+}

@@ -1,0 +1,46 @@
+.ballContainer {
+  width: 4.5rem;
+  background-color: #ccc;
+  height: 2.3rem;
+  padding: 0.5rem;
+  border-radius: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  transform: scale(1.5);
+  margin: 2rem 2rem;
+}
+.ballcontainer-toggled {
+  background-color: var(--color-success);
+}
+
+.ball {
+  border-radius: 50%;
+  border: 1px;
+  width: 2rem;
+  height: 2rem;
+  background-color: #fff;
+  position: absolute;
+  left: 0;
+  top: 2;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.ball-right {
+  transform: translateX(2.5rem);
+}
+.sub-plans {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .sub-plans {
+    flex-direction: column;
+
+    margin: 2rem auto;
+  }
+}

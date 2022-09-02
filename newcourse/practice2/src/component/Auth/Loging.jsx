@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import Img_login from "../../assets/login.svg";
-
-const Loging = ({ onRegister, onReset }) => {
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
+const Loging = ({
+  onRegister,
+  onReset,
+  onShowPassword = false,
+  ontogglePassword,
+}) => {
   return (
     <div className="main-container --flex-center ">
       <div className="img-container">
@@ -12,11 +17,24 @@ const Loging = ({ onRegister, onReset }) => {
           <h2 className="--color-danger --text-center">Login</h2>
 
           <input type="text" className="--width-100" placeholder="UserName" />
-          <input
-            type="password"
-            className="--width-100"
-            placeholder="Password"
-          />
+          <div>
+            <input
+              type={onShowPassword ? "text" : "password"}
+              className="--width-100"
+              placeholder="Password"
+            />
+            {onShowPassword ? (
+              <AiOutlineEye
+                className="ctrl_password"
+                onClick={ontogglePassword}
+              />
+            ) : (
+              <AiOutlineEyeInvisible
+                className="ctrl_password"
+                onClick={ontogglePassword}
+              />
+            )}
+          </div>
           <button className="--btn --btn-primary --btn-block">Login</button>
           <a href="#" className="--text-sm" onClick={onReset}>
             Forget Password

@@ -71,6 +71,10 @@ form {
   align-items: center;
   color: red;
 }
+.ctrl_password {
+  margin-left: -30px;
+  cursor: pointer;
+}
 
 @media screen and(max-width:50rem) {
   .img-container {
@@ -82,4 +86,33 @@ form {
   .form-container {
     width: 100%;
   }
+}
+.hide_indicator {
+  display: none;
+}
+.show_indicator {
+  display: block;
+  animation: slide-up 1s ease;
+}
+.pass_green {
+  color: green;
+}
+.pass_red {
+  color: red;
+}
+
+.btn-disabled {
+  position: relative;
+  cursor: not-allowed;
+}
+
+.btn-disabled::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 999;
 }

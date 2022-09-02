@@ -1,0 +1,73 @@
+.price-box {
+  width: 30rem;
+  text-align: center;
+  background-color: var(--color-white);
+  padding-bottom: 3rem;
+  margin: 2rem 1.5rem;
+}
+.price-box h4 span {
+  font-size: 1.6rem;
+  vertical-align: middle;
+}
+.price-box h4 span:nth-child(2) {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.price-box ul {
+  list-style: none;
+  margin-bottom: 3rem;
+}
+
+.price-box ul li {
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-transform: capitalize;
+  padding: 1.2rem 0;
+  border-top: 1px solid var(--color-grey);
+}
+
+.price-box ul li:last-child {
+  border-bottom: 1px solid var(--color-grey);
+}
+
+.price-box button {
+  font-size: 1.4rem;
+  text-decoration: none;
+  background-color: var(--color-success);
+  padding: 1.2rem 3rem;
+
+  border: 1px solid transparent;
+  border-radius: 15px;
+  margin-bottom: 3rem;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.price-box button:hover {
+  font-size: 1.5rem;
+}
+
+.theme1 {
+  background: linear-gradient(
+    45deg,
+    rgba(28, 124, 28, 1) 39%,
+    rgba(36, 244, 77, 1) 91%
+  );
+}
+
+.theme2 {
+  background: linear-gradient(
+    45deg,
+    rgba(88, 64, 15, 1) 27%,
+    rgba(112, 103, 32, 1) 69%
+  );
+}
+
+.theme3 {
+  background: linear-gradient(
+    111deg,
+    rgba(195, 106, 171, 1) 31%,
+    rgba(168, 36, 244, 1) 64%
+  );
+}
