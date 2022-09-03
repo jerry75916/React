@@ -4,7 +4,11 @@ import img_Login from "../../assets/login.png";
 import { Link, useNavigate } from "react-router-dom";
 import { IoLogoGoogle } from "react-icons/io";
 import Card from "../../Component/card/Card";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { auth } from "../firebase/config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,7 +35,22 @@ const Login = () => {
         setisLoading(false);
       });
   };
+  const loginWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
 
+    setisLoading(true);
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        setisLoading(false);
+        toast.success("Google Login success");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        setisLoading(false);
+      });
+  };
   return (
     <>
       <ToastContainer />
@@ -64,7 +83,11 @@ const Login = () => {
                   </Link>
                 </div>
                 <p> --or--</p>
-                <button className="--btn --btn-danger --btn-block">
+                <button
+                  type="button"
+                  className="--btn --btn-danger --btn-block"
+                  onClick={loginWithGoogle}
+                >
                   <IoLogoGoogle size={20} /> Login with Google
                 </button>
                 <span className="register">
