@@ -26,13 +26,14 @@
 
 .slide img {
   height: 100%;
+  width: 100%;
 }
 
 .content {
   position: absolute;
   text-align: center;
   top: 23rem;
-  left: 50%;
+  left: 25%;
   opacity: 0;
   width: 50%;
   padding: 3rem;
@@ -42,7 +43,8 @@
   flex-direction: column;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.4);
-  animation: slide-up 1s ease 0.5s;
+  animation: slide-up 0.5s ease-in-out;
+  animation-fill-mode: forwards;
 
   //   visibility: hidden;
   h2 {
@@ -52,11 +54,11 @@
 
 @keyframes slide-up {
   0% {
-    visibility: visible;
+    // visibility: visible;
     top: 23rem;
   }
   100% {
-    visibility: visible;
+    // visibility: visible;
     top: 17rem;
   }
 }
@@ -74,7 +76,7 @@
 
 .current {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0%);
 }
 
 .current .content {

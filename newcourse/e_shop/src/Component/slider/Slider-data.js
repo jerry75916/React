@@ -5,18 +5,18 @@ export const sliderData = [
     desc: "Up to 30% off on all onsale proucts.",
   },
   {
-    image: "https://i.imgur.com/WU94iuv.jpeg",
+    image: "https://i.imgur.com/AJQrMa3.jpeg",
     heading: "Women Fashion",
     desc: "Up to 30% off on all onsale proucts.",
   },
   {
     image: "https://i.imgur.com/DebpKZa.png",
-    heading: "Men Fashion",
+    heading: "Viedo Game",
     desc: "Up to 30% off on all onsale proucts.",
   },
   {
-    image: "https://i.imgur.com/MHU84dL.jpeg",
-    heading: "Awesome Gadgets",
+    image: "https://i.imgur.com/EJa4LAl.jpeg",
+    heading: "Awesome Man Fashion",
     desc: "Up to 30% off on all onsale proucts.",
   },
 ];
