@@ -6,7 +6,7 @@ import { Header, Footer } from "./Component/index";
 
 //pages
 import { Home, Contact, Login, Register, Reset } from "./pages/";
-
+ 
 const App = () => {
   return (
     <>

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./Header_Module.scss";
-import { Link, NavLink, Navigate, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiShoppingCart } from "react-icons/gi";
 import { BiMenuAltRight } from "react-icons/bi";
 import { FaTimes, FaUserCircle } from "react-icons/fa";
-
 import { auth } from "../../pages/firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
+import { REMOVE_ACTIVE_USER } from "../../redux/slice/authSlice";
+import ShowOnLoggin, { ShowOnLoggOut } from "../HiddenLink/HiddenLink";
 const Component_logo = (
   <div className="logo">
     <Link to="/">
@@ -31,11 +34,11 @@ const activLink = ({ isActive }) => {
   return isActive ? `active` : ``;
 };
 const Header = () => {
-  const user = auth.currentUser;
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [isLoggin, setIsLoggin] = useState(false);
   const [displayName, setdisplayName] = useState("");
+  const dispatch = useDispatch();
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -56,15 +59,29 @@ const Header = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
+
+        //no display name
+        if (!user.displayName) {
+          const usname = user.email.substring(0, user.email.indexOf("@")); //取@前的字串
+          const CUserName = usname.charAt(0).toUpperCase() + usname.slice(1); //大寫開頭小寫為後的email字串
+          setdisplayName(CUserName);
+        }
         setdisplayName(user.displayName);
-        console.log(user);
         setIsLoggin(true);
+        dispatch(
+          SET_ACTIVE_USER({
+            email: user.email,
+            userName: user.displayName ? user.displayName : displayName,
+            userID: uid,
+          })
+        );
       } else {
         // User is signed out
+        dispatch(REMOVE_ACTIVE_USER());
         setIsLoggin(false);
       }
     });
-  }, []);
+  }, [dispatch, displayName]);
 
   return (
     <>
@@ -103,25 +120,26 @@ const Header = () => {
             </ul>
             <div className="header-right">
               <span className="links">
-                <NavLink to="/login" className={activLink}>
-                  Login
-                </NavLink>
-                <a href="#home" style={{ color: "#ff7722" }}>
-                  <FaUserCircle size={16} />
-                  Hi, {displayName}
-                </a>
-
-                <NavLink to="/register" className={activLink}>
-                  Register
-                </NavLink>
-                <NavLink to="/order-history" className={activLink}>
-                  My Orders
-                </NavLink>
-                {isLoggin && (
+                <ShowOnLoggOut>
+                  <NavLink to="/login" className={activLink}>
+                    Login
+                  </NavLink>
+                  <NavLink to="/register" className={activLink}>
+                    Register
+                  </NavLink>
+                </ShowOnLoggOut>
+                <ShowOnLoggin>
+                  <a href="#home" style={{ color: "#ff7722" }}>
+                    <FaUserCircle className="user" />
+                    Hi, {displayName}
+                  </a>
+                  <NavLink to="/order-history" className={activLink}>
+                    My Orders
+                  </NavLink>
                   <Link to="/" onClick={LogOutUser}>
                     LogOut
                   </Link>
-                )}
+                </ShowOnLoggin>
               </span>
               {Cart}
             </div>
