@@ -13,6 +13,9 @@ import { useDispatch } from "react-redux";
 import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
 import { REMOVE_ACTIVE_USER } from "../../redux/slice/authSlice";
 import ShowOnLoggin, { ShowOnLoggOut } from "../HiddenLink/HiddenLink";
+import AdminOnlyRoute, {
+  AdminOnlyLink,
+} from "../AdminOnlyRoute/AdminOnlyRoute";
 const Component_logo = (
   <div className="logo">
     <Link to="/">
@@ -36,7 +39,7 @@ const activLink = ({ isActive }) => {
 const Header = () => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const [isLoggin, setIsLoggin] = useState(false);
+
   const [displayName, setdisplayName] = useState("");
   const dispatch = useDispatch();
   const toggleMenu = () => {
@@ -67,7 +70,7 @@ const Header = () => {
           setdisplayName(CUserName);
         }
         setdisplayName(user.displayName);
-        setIsLoggin(true);
+
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
@@ -78,7 +81,6 @@ const Header = () => {
       } else {
         // User is signed out
         dispatch(REMOVE_ACTIVE_USER());
-        setIsLoggin(false);
       }
     });
   }, [dispatch, displayName]);
@@ -105,6 +107,13 @@ const Header = () => {
               ) : (
                 ``
               )}
+              <AdminOnlyLink>
+                <li>
+                  <NavLink to="/admin">
+                    <button className="--btn --btn-primary">Admin</button>
+                  </NavLink>
+                </li>
+              </AdminOnlyLink>
               <li>
                 <NavLink className={activLink} to="/">
                   Home

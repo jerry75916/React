@@ -25,16 +25,16 @@ const Slider = () => {
       setcurrentSlider(currentSlider - 1);
     }
   };
-  const autoSlider = () => {
-    SliderInterval = setInterval(nextSlide, InterValTime);
-  };
 
   useEffect(() => {
     if (autoScroll) {
+      const autoSlider = () => {
+        SliderInterval = setInterval(nextSlide, InterValTime);
+      };
       autoSlider();
     }
     return () => clearInterval(SliderInterval); //為了讓點選時不要再重設一個time interval
-  }, [currentSlider]);
+  }, [currentSlider, SliderInterval, autoScroll]);
 
   return (
     <div className="slider">
