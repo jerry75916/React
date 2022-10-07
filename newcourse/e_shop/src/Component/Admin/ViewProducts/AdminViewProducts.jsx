@@ -14,42 +14,27 @@ import { storage, sotreDb,StorageeRef,StorageDeleObj } from "../../../pages/fire
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../loader/Loader";
-import { async } from "@firebase/util";
 import ConfirmBox from "../../ConfirmBox/ConfirmBox";
 import { useDispatch } from "react-redux";
 import { STORE_PRODUCTS } from "../../../redux/slice/productSlice";
+import useFetchCollection from "../../../customHooks/useFetchCollection";
+import { useSelector } from "react-redux";
+import { selectProducts } from "../../../redux/slice/productSlice";
 
 const AdminViewProducts = () => {
-  const dispatch=useDispatch();
-  const [Products, setProducts] = useState([]);
-  const [isLoading, setisLoading] = useState(false);
+
   const [displayConfirm,setDisplayConfirm]=useState(false);
   const [delObj,setdelObj]=useState(null);
   const navigator=useNavigate();
-  const getProducts = () => {
-    try {
-      setisLoading(true);
-      const productsRef = collection(sotreDb, "products");
 
-      const q = query(productsRef, orderBy("createdAt", "desc"));
-       const AllProducts = Products;
-      onSnapshot(q, (Snapshot) => {
-       
-        Snapshot.forEach((doc) => {
-          AllProducts.push({ id: doc.id, ...doc.data() });
-        });
-        setProducts(AllProducts);
-        setisLoading(false);
-        dispatch(STORE_PRODUCTS({
-          products:AllProducts
-        }))
-      });
-     
-    } catch (e) {
-      setisLoading(false);
-      toast.error(e.message);
-    }
-  };
+  const {data,isLoading}= useFetchCollection("products");
+  const Products=useSelector(selectProducts)
+  const dispatch=useDispatch();
+  useEffect(() => {
+    dispatch(STORE_PRODUCTS({
+       products:data
+     }))
+   }, [dispatch,data]);
   const DelProd=(status)=>{
     setDisplayConfirm(false)
 
@@ -76,9 +61,7 @@ const AdminViewProducts = () => {
   
 
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+
   return (
     <>
       {isLoading && <Loader />}
@@ -102,26 +85,27 @@ const AdminViewProducts = () => {
             </thead>
             <tbody>
               {Products.map((product, index) => {
+                const {id,imageURL,desc,name,category,price}=product
                 return (
-                  <tr key={product.id}>
+                  <tr key={id}>
                     <td>{index + 1}</td>
-                    <td>{product.id}</td>
+                    <td>{id}</td>
                     <td>
                       <img
-                        src={product.imageURL}
-                        alt={product.desc}
+                        src={imageURL}
+                        alt={desc}
                         style={{ width: "100px", height: "100px" }}
                       ></img>
                     </td>
-                    <td>{product.name}</td>
-                    <td>{product.category}</td>
-                    <td>{product.price}</td>
+                    <td>{name}</td>
+                    <td>{category}</td>
+                    <td>{price}</td>
                     <td className="icons">
-                      <Link to={`/admin/add-product/${product.id}`}>
+                      <Link to={`/admin/add-product/${id}`}>
                         <FaEdit size={20} color={"green"} />
                       </Link>
                       &nbsp;
-                      <FaTrash onClick={()=>delProduct( product.id,product.imageURL)}  size={20} color={"red"} />
+                      <FaTrash onClick={()=>delProduct( id,imageURL)}  size={20} color={"red"} />
                     </td>
                   </tr>
                 );

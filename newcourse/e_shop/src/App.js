@@ -12,6 +12,7 @@ import {
   ViewProducts,
   AddProduct,
   Orders,
+  ProductDetails
 } from "./Component/index";
 
 //pages
@@ -28,8 +29,7 @@ const App = () => {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/reset" element={<Reset />}></Route>
-          <Route
-            path="/admin/*"
+          <Route path="/admin/*"
             element={
               <AdminOnlyRoute>
                 <Admin />
@@ -42,6 +42,7 @@ const App = () => {
             <Route path="add-product/:id" element={<AddProduct />}></Route>
             <Route path="orders" element={<Orders />}></Route>
           </Route>
+          <Route path="/product-details/:id" element={<ProductDetails />}></Route>
         </Routes>
         <Footer />
       </Router>
