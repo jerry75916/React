@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "./Header_Module.scss";
+import {
+  CALCULATE_TOTALQUANTITY,
+  selectCartTotalQuantity,
+} from "../../redux/slice/cartSlice";
+import styles from "./Header.module.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiShoppingCart } from "react-icons/gi";
 import { BiMenuAltRight } from "react-icons/bi";
@@ -9,7 +13,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { signOut } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
 import { REMOVE_ACTIVE_USER } from "../../redux/slice/authSlice";
 import ShowOnLoggin, { ShowOnLoggOut } from "../HiddenLink/HiddenLink";
@@ -17,7 +21,7 @@ import AdminOnlyRoute, {
   AdminOnlyLink,
 } from "../AdminOnlyRoute/AdminOnlyRoute";
 const Component_logo = (
-  <div className="logo">
+  <div className={styles.logo}>
     <Link to="/">
       <h2>
         e<span>Shop</span>.
@@ -25,23 +29,35 @@ const Component_logo = (
     </Link>
   </div>
 );
-const Cart = (
-  <span className="cart">
-    <Link to="/cart">
-      <GiShoppingCart size={25} />
-      <p>0</p>
-    </Link>
-  </span>
-);
+const Cart = ({ cartQuantity }) => {
+  return (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        <GiShoppingCart size={25} />
+        <p>{cartQuantity}</p>
+      </Link>
+    </span>
+  );
+};
 const activLink = ({ isActive }) => {
-  return isActive ? `active` : ``;
+  return isActive ? `${styles.active}` : ``;
 };
 const Header = () => {
+  const cartQuantity = useSelector(selectCartTotalQuantity);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-
+  const [scrollPage, setIsScroll] = useState(false);
   const [displayName, setdisplayName] = useState("");
   const dispatch = useDispatch();
+
+  const fixNavBar = () => {
+    if (window.scrollY > 80) {
+      setIsScroll(true);
+    } else {
+      setIsScroll(false);
+    }
+  };
+  window.addEventListener("scroll", fixNavBar);
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -84,25 +100,33 @@ const Header = () => {
       }
     });
   }, [dispatch, displayName]);
-
+  useEffect(() => {
+    dispatch(CALCULATE_TOTALQUANTITY());
+  }, []);
   return (
     <>
       <ToastContainer />
-      <header>
-        <div className="header">
+      <header className={scrollPage ? `${styles.fixed}` : ``}>
+        <div className={styles.header}>
           {Component_logo}
-          <nav className={showMenu ? `show-nav` : `hide-nav`}>
+          <nav
+            className={
+              showMenu ? `${styles["show-nav"]}` : `${styles["hide-nav"]}`
+            }
+          >
             <div
               className={
-                showMenu ? `nav-wrapper show-nav-wrapper` : `nav-wrapper`
+                showMenu
+                  ? `${styles["nav-wrapper"]} ${styles["show-nav-wrapper"]}`
+                  : `${styles["nav-wrapper"]}`
               }
               onClick={hideMenu}
             ></div>
             <ul>
               {showMenu ? (
-                <li className="logo-mobile">
+                <li className={`${styles["logo-mobile"]}`}>
                   <Link to="/">{Component_logo}</Link>
-                  <FaTimes size={20} onClick={hideMenu} className="x" />
+                  <FaTimes size={20} onClick={hideMenu} className={styles.x} />
                 </li>
               ) : (
                 ``
@@ -127,8 +151,8 @@ const Header = () => {
                 </NavLink>
               </li>
             </ul>
-            <div className="header-right">
-              <span className="links">
+            <div className={`${styles["header-right"]}`}>
+              <span className={styles.links}>
                 <ShowOnLoggOut>
                   <NavLink to="/login" className={activLink}>
                     Login
@@ -139,7 +163,7 @@ const Header = () => {
                 </ShowOnLoggOut>
                 <ShowOnLoggin>
                   <a href="#home" style={{ color: "#ff7722" }}>
-                    <FaUserCircle className="user" />
+                    <FaUserCircle className={styles.user} />
                     Hi, {displayName}
                   </a>
                   <NavLink to="/order-history" className={activLink}>
@@ -150,11 +174,11 @@ const Header = () => {
                   </Link>
                 </ShowOnLoggin>
               </span>
-              {Cart}
+              <Cart cartQuantity={cartQuantity} />
             </div>
           </nav>
-          <div className="menu-icon">
-            {Cart}
+          <div className={`${styles["menu-icon"]}`}>
+            <Cart cartQuantity={cartQuantity} />
             <BiMenuAltRight size={30} onClick={toggleMenu} />
           </div>
         </div>

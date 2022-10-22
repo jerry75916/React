@@ -1,16 +1,21 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./AdminAddProduct_Module.scss";
 import Card from "../../card/Card";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { sotreDb, storage,StorageeRef,StorageDeleObj } from "../../../pages/firebase/config";
+import {
+  sotreDb,
+  storage,
+  StorageeRef,
+  StorageDeleObj,
+} from "../../../pages/firebase/config";
 import {
   deleteObject,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { Timestamp, collection, addDoc,doc, setDoc } from "firebase/firestore";
+import { Timestamp, collection, addDoc, doc, setDoc } from "firebase/firestore";
 import Loader from "../../loader/Loader";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../../redux/slice/productSlice";
@@ -37,29 +42,24 @@ const detectForm = (id, f1, f2) => {
 };
 const AdminAddProducts = () => {
   const { id } = useParams();
-  
+
   const [UploadProgress, setUploadProgress] = useState(0);
   const [isLoading, setisLoading] = useState(false);
-  const products=useSelector(selectProducts);
-  const productEdit=products.find((product)=>{return product.id===id});
-  console.log(productEdit)
-  const detectForm=(id,f1,f2)=>{
-    if(id==='ADD')
-    {
-    return f1;
-    }else
-    {
-      
-      return f2
-    }
-  }
-  const [Product, setProduct] = useState(()=>
-  {
-   return detectForm(id,initialState,productEdit)
-
+  const products = useSelector(selectProducts);
+  const productEdit = products.find((product) => {
+    return product.id === id;
   });
- 
-  
+  const detectForm = (id, f1, f2) => {
+    if (id === "ADD") {
+      return f1;
+    } else {
+      return f2;
+    }
+  };
+  const [Product, setProduct] = useState(() => {
+    return detectForm(id, initialState, productEdit);
+  });
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProduct({ ...Product, [name]: value });
@@ -95,7 +95,6 @@ const AdminAddProducts = () => {
   const addProduct = (e) => {
     e.preventDefault();
     setisLoading(true);
-
     try {
       // Add a new document with a generated id.
       const docRef = addDoc(collection(sotreDb, "products"), {
@@ -104,53 +103,41 @@ const AdminAddProducts = () => {
         createdAt: Timestamp.now().toDate(),
       });
       toast.success("Product upload successed");
-      // setisLoading(false);
-      // setProduct(initialState);
-      // setUploadProgress(0);
-      // fileref.current.value = "";
       navigate("/admin/all-products");
     } catch (e) {
       setisLoading(false);
       toast.error(e.message);
     }
   };
-  const editProduct=(e)=>{
+  const editProduct = (e) => {
     e.preventDefault();
     setisLoading(true);
-    try{
-      
-      if(Product.imageURL!==productEdit.imageURL){
-
-      
+    try {
+      if (Product.imageURL !== productEdit.imageURL) {
         const desertRef = StorageeRef(storage, productEdit.imageURL);
-        StorageDeleObj(desertRef)
-
-
-
+        StorageDeleObj(desertRef);
       }
 
       setDoc(doc(sotreDb, "products", id), {
         ...Product,
-         createdAt:productEdit.createdAt,
-         editedAt:Timestamp.now().toDate()
+        createdAt: productEdit.createdAt,
+        editedAt: Timestamp.now().toDate(),
       });
       setisLoading(false);
       navigate("/admin/all-products");
-      toast.success('Edit successfuly!!')
-     
-    }catch(e){
-    setisLoading(false);
-     toast.error(e.message);
+      toast.success("Edit successfuly!!");
+    } catch (e) {
+      setisLoading(false);
+      toast.error(e.message);
     }
-  }
+  };
 
   return (
     <div className="product">
-      
       {isLoading ? <Loader /> : ``}
-      <h1>{detectForm(id,'Add New Product','Edit Product')}</h1>
+      <h1>{detectForm(id, "Add New Product", "Edit Product")}</h1>
       <Card cardClass="card">
-        <form onSubmit={detectForm(id,addProduct,editProduct)}>
+        <form onSubmit={detectForm(id, addProduct, editProduct)}>
           <label htmlFor="name">Product Name:</label>
           <input
             type="text"
@@ -177,7 +164,6 @@ const AdminAddProducts = () => {
             name="image"
             onChange={(e) => handleImageChange(e)}
             ref={fileref}
-           
           />
           <input
             type="hidden"

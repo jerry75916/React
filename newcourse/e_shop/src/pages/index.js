@@ -8,4 +8,12 @@ export { default as Register } from "./auth/Register";
 
 export { default as Reset } from "./auth/Reset";
 
-export {default as Admin} from "./admin/admin"
+export { default as Admin } from "./admin/admin";
+
+export { default as CheckOut } from "../pages/checkout/CheckOut";
+
+export { default as CheckOutSuccess } from "../pages/checkout/CheckOutSuccess";
+
+export { default as Orderhistory } from "./order/OrderHistory";
+
+export { default as OrderDetail } from "./order/OrderDetail";
