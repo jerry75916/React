@@ -55,7 +55,7 @@ export default function CheckOutForm() {
       navigate("/checkout-success");
       toast.success("Order Saved");
     } catch (e) {
-      console.log(e);
+     
       toast.error(e.message);
     }
   };

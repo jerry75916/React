@@ -1,40 +1,28 @@
-import React, { useState, useEffect } from "react";
-import styles from "./OrderDetail.module.scss";
-import { useParams } from "react-router-dom";
-import useFetchDocument from "../../customHooks/useFetchDocument";
-import Loader from "../../Component/loader/Loader";
-import { Link } from "react-router-dom";
-import { fetchOrderById } from "../../redux/slice/orderSlice";
-import { selectSingleOrder } from "../../redux/slice/orderSlice";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import ChangeOrderStatus from "./ChangeOrderStatus";
+import styles from "./OrderDetails.module.scss";
+import spinnerImg from "../../../assets/spinner.jpg";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOrderById } from "../../../redux/slice/orderSlice";
 
-const OrderDetail = () => {
-  const dispatch = useDispatch();
+const OrderDetails = () => {
   const { id } = useParams();
-  //   const [order, setOrder] = useState(null);
-  //   const [isLoading, setIsLoading] = useState(true);
-  //   const { document, Loading } = useFetchDocument("orders", id);
+  const dispatch = useDispatch();
   const singleOrder = useSelector((state) => state.orders.singleOrder);
-
-  //   useEffect(() => {
-  //     setOrder(document);
-  //     setIsLoading(Loading);
-  //   }, [document, Loading]);
   useEffect(() => {
     dispatch(fetchOrderById({ TableName: "orders", id }));
   }, [dispatch]);
-
   return (
-    <section>
-      <div className={`container ${styles.table}`}>
+    <>
+      <div className={styles.table}>
         <h2>Order Details</h2>
         <div>
-          <Link to="/order-history">&larr; Back To Orders</Link>
+          <Link to="/admin/orders">&larr; Back To Orders</Link>
         </div>
         <br />
         {!singleOrder ? (
-          <Loader />
+          <img src={spinnerImg} alt="Loading..." style={{ width: "50px" }} />
         ) : (
           <>
             <p>
@@ -46,6 +34,17 @@ const OrderDetail = () => {
             <p>
               <b>Order Status</b> {singleOrder.orderStatus}
             </p>
+            <p>
+              <b>Shipping Address</b>
+              <br />
+              Address: {singleOrder.ShippingAddress.line1},
+              {singleOrder.ShippingAddress.line2},{" "}
+              {singleOrder.ShippingAddress.city}
+              <br />
+              State: {singleOrder.ShippingAddress.state}
+              <br />
+              Country: {singleOrder.ShippingAddress.country}
+            </p>
             <br />
             <table>
               <thead>
@@ -55,7 +54,6 @@ const OrderDetail = () => {
                   <th>Price</th>
                   <th>Quantity</th>
                   <th>Total</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,13 +77,6 @@ const OrderDetail = () => {
                       <td>{price}</td>
                       <td>{Quantity}</td>
                       <td>{(price * Quantity).toFixed(2)}</td>
-                      <td className={styles.icons}>
-                        <Link to={`/review-product/${id}`}>
-                          <button className="--btn --btn-primary">
-                            Review Product
-                          </button>
-                        </Link>
-                      </td>
                     </tr>
                   );
                 })}
@@ -93,9 +84,10 @@ const OrderDetail = () => {
             </table>
           </>
         )}
+        <ChangeOrderStatus order={singleOrder} id={id} />
       </div>
-    </section>
+    </>
   );
 };
 
-export default OrderDetail;
+export default OrderDetails;

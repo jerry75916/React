@@ -17,3 +17,5 @@ export { default as CheckOutSuccess } from "../pages/checkout/CheckOutSuccess";
 export { default as Orderhistory } from "./order/OrderHistory";
 
 export { default as OrderDetail } from "./order/OrderDetail";
+
+export { default as ReviewProduct } from "./order/ReviewProduct";

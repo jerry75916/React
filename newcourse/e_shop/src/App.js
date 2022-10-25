@@ -15,6 +15,7 @@ import {
   ProductDetails,
   Cart,
   CheckOutDetails,
+  OrderDetails,
 } from "./Component/index";
 
 //pages
@@ -29,6 +30,7 @@ import {
   CheckOutSuccess,
   Orderhistory,
   OrderDetail,
+  ReviewProduct,
 } from "./pages/";
 
 const App = () => {
@@ -42,9 +44,11 @@ const App = () => {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/reset" element={<Reset />}></Route>
+          {/* Admin中的子Route配置，Element的Routing, 某一頁中的Routing*/}
           <Route
             path="/admin/*"
             element={
+              // AdminOnlyRoute為多Layout判斷
               <AdminOnlyRoute>
                 <Admin />
               </AdminOnlyRoute>
@@ -55,6 +59,7 @@ const App = () => {
             <Route path="all-products" element={<ViewProducts />}></Route>
             <Route path="add-product/:id" element={<AddProduct />}></Route>
             <Route path="orders" element={<Orders />}></Route>
+            <Route path="order-details/:id" element={<OrderDetails />}></Route>
           </Route>
           <Route
             path="/product-details/:id"
@@ -66,6 +71,7 @@ const App = () => {
           <Route path="/checkout-success" element={<CheckOutSuccess />}></Route>
           <Route path="/order-history" element={<Orderhistory />}></Route>
           <Route path="/order-details/:id" element={<OrderDetail />}></Route>
+          <Route path="/review-product/:id" element={<ReviewProduct />}></Route>
         </Routes>
         <Footer />
       </Router>

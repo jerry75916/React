@@ -20,7 +20,9 @@ import {
   CALCULATE_TOTALQUANTITY,
 } from "../../../redux/slice/cartSlice";
 import useFetchDocument from "../../../customHooks/useFetchDocument";
-
+import useFetchCollection from "../../../customHooks/useFetchCollection";
+import Card from "../../card/Card";
+import StarsRating from "react-star-rate";
 const ProductDetails = () => {
   const { id } = useParams();
   const CartItems = useSelector(selectCartItems);
@@ -35,6 +37,8 @@ const ProductDetails = () => {
     dispatch(DECRESE_CART(product));
   };
   const { document, Loading } = useFetchDocument("products", id);
+  const { data } = useFetchCollection("reviews");
+  const filterReview = data.filter((review) => review.productID === id);
   useEffect(() => {
     setProduct(document);
     setisLoading(Loading);
@@ -98,6 +102,31 @@ const ProductDetails = () => {
                 </div>
               </div>
             }
+            <Card cardClass={styles.card}>
+              <h3>Product Reviews</h3>
+              <div>
+                {filterReview.length === 0 ? (
+                  <p>There is no review for theis product</p>
+                ) : (
+                  filterReview.map((reviews, index) => {
+                    const { UserName, rate, review, reviewDate } = reviews;
+                    return (
+                      <div key={index} className={styles.rate}>
+                        <StarsRating value={rate} disabled="true" />
+                        <p>{review}</p>
+                        <span>
+                          <b>{reviewDate}</b>
+                        </span>
+                        <br />
+                        <span>
+                          <b>by: {UserName}</b>
+                        </span>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </Card>
           </div>
         </section>
       )}

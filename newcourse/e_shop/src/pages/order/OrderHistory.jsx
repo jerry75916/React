@@ -12,7 +12,7 @@ const OrderHistory = () => {
   const dispatch = useDispatch();
   const { data, isLoading } = useFetchCollection("orders");
   const orders = useSelector(selectOrderHistory);
-  console.log(orders);
+
   const userID = useSelector(selectuserID);
   useEffect(() => {
     dispatch(STORE_ORDERS(data));
