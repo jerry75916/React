@@ -15,4 +15,8 @@ The complete web site you can click this link <a href="https://jerry-hsieh-react
 1) New Practice to let the web site look fancy<br/>
 
 ![image](https://user-images.githubusercontent.com/101940444/188038636-bc29e646-3c36-4b97-bf58-357e573befa4.png)<br/>
-<a href="https://stellar-cassata-b2dd7c.netlify.app/login/">New Practice eshop</a>
+![image](https://user-images.githubusercontent.com/101940444/197964276-c07ecbc9-16df-4ca7-8547-65fb7aa17e09.png)
+![image](https://user-images.githubusercontent.com/101940444/197964400-044fc870-68f0-446f-b4cd-5626d4fa3c4b.png)
+![image](https://user-images.githubusercontent.com/101940444/197965621-60798cfb-ec71-41d0-9d9b-66c653dc348f.png)
+
+<a href="https://jerry-react-eshop.netlify.app/">New Practice eshop</a>
